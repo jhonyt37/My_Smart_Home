@@ -1,0 +1,45 @@
+{% extends "template_base.html" %}
+
+{% block content %}
+
+<div class="container">
+  <div class="jumbotron">
+  	<table align="center" id="tab1"> 
+  	<tr align="center">
+  		<h3>Envio de alarmas</h2>
+  	</tr>
+  	<tr>
+  		<td>
+  			<form action="{%url 'app:correo_envio'%}" method="get">
+		    	<input type="hidden" name="alerta_id" value="2"/>
+				<button class="red" type="submit">Critico</button>
+		    </form>
+        </td>
+        <td>
+        </td>
+        <td>
+
+        	<form action="{%url 'app:correo_envio'%}" method="get">
+		    	<input type="hidden" name="alerta_id" value="1"/>
+		    	<button class="orange" type="submit">Seguridad</button>
+		    </form>
+        </td>
+        <td>
+        </td>
+        <td>
+
+        	<form action="{%url 'app:correo_envio'%}" method="get">
+		    	<input type="hidden" name="alerta_id" value="0"/>
+		    	<button class="green" type="submit">Notificacion</button>
+		    </form>
+        </td>
+    </tr>
+    <tr></tr>
+    </table>
+    <div align = "center">
+        <a href="/app/" style="float:right; display:inline-block;margin:20px">volver
+    </div>
+  </div>
+</div>
+
+{% endblock %}

@@ -1,0 +1,159 @@
+{% extends "template_base.html" %}
+{% load staticfiles %}
+{% load admin_static %}
+{% block content %}
+
+<style>
+	#ger-create-element, #ger-create-element:hover{
+		color: #555555;
+		padding: 0.7em;
+		margin: 0.7em;
+		text-decoration: none;
+		background: #DFDFDF;
+	}
+	.ger-element-status-container{
+		margin-top: 10px;
+	}
+	
+	@media (max-width: 600px) {
+		.ger-element-status{
+			margin: 0;
+			padding: 0;
+		}
+		.ger-element-info{
+			padding: 0;
+			margin: 0.1em;
+		}
+		.ger-element-status-container{
+			margin-top: 15px;
+		}
+	}
+</style>
+<div id="ger-principal-container">
+    <div id="ger-principal-content">
+        <div id="layout">
+            <div class="pure-g">
+                <div class="pure-u-1 pure-u-sm-1-4 pure-u-lg-1-8 pure-u-xl-1-12">
+                    <div id="menu">
+                    	{% if info.inmuebles %}
+
+	                        <div class="ger-house-menu">
+	                        	<div class="pure-g">
+	                        		{% for inmueble in info.inmuebles %}
+		                                <div class="pure-u-1-3 pure-u-sm-1">
+		                                	{% if inmueble.id|add:0 == info.inmueble_actual.id|add:0 %}
+		                                		<a class="ger-house ger-house-selected" href="?inmu_id={{inmueble.id}}">
+		                                	{% else %}
+		                                		<a class="ger-house" href="?inmu_id={{inmueble.id}}">
+		                                	{% endif %}
+		                                        <div class="pure-g">
+		                                            <div class="pure-u-1">
+		                                                <div class="ger-house-content">
+
+		                                                	{% with estado=inmueble.estado|stringformat:"s" %}
+															<img class="ger-house-icon" src="{% static "core_app/icons/home-icon-"|add:estado|add:".png" %}"/>
+			                                                {% endwith %}
+		                                                    <h4>{{inmueble.nombre}}</h4>
+		                                                </div>
+		                                            </div>
+		                                        </div>
+		                                    </a>
+		                                </div>
+		                            {% endfor %}
+	                            </div>
+	                        </div>
+	                    {% endif %}
+                    </div>
+                </div>
+                
+                <div class="pure-u-1 pure-u-sm-3-4 pure-u-lg-7-8 pure-u-xl-11-12">
+                    <div id="ger-left-content">
+                        {% if info.elementos %}
+	                        <div class="header">
+	                            <h1>{{ info.inmueble_actual.nombre }}</h1>
+	                            <h5>Último evento registrado: Jueves 12 de Marzo de 2015 a las 00:37 horas</h5>
+	                        </div>
+	                        <h3>Elementos</h3>
+	                        	<p><a id="ger-create-element" href="/app/create/?inmu_id={{info.inmueble_actual.id}}">Agregar elemento</a></p>
+		                        <div>
+		                            <div class="pure-g">
+		                                <div class="pure-u-1 pure-u-lg-1-2 pure-u-xl-1-3">
+	                                    {% for elemento in info.elementos %}
+		                                    <div class="ger-element-container">
+		                                        <div class="pure-g ger-element-content">
+		                                            <div class="pure-u-1-12 pure-u-sm-1-8">
+		                                                <div class="ger-element-status-container">
+		                                                    <div class="ger-element-status ger-element-status-{{elemento.estado}}">
+		                                                    	{% if elemento.estado == 2 %}
+		                                                        			<img class="ger-element-icon" src="{% static "core_app/icons/fire-icon.png"%}"/>
+			                                                        {% else %}{% if elemento.estado == 1 %}
+			                                                        		<img class="ger-element-icon" src="{% static "core_app/icons/move-icon.png"%}"/>
+			                                                        	{% else %}{% if elemento.estado == 0 %}
+			                                                        		<img class="ger-element-icon" src="{% static "core_app/icons/light-icon.png"%}"/>
+			                                                        	{% endif %}
+			                                                        {% endif %}
+		                                                        {% endif %}
+		                                                    </div>
+		                                                </div>
+		                                            </div>
+		                                            <div class="pure-u-11-12 pure-u-sm-7-8">
+		                                                <div class="accordion ger-element-info">
+		                                                    <div class="ger-element-info-label accordion-header">
+		                                                    	<div class="pure-g">
+		                                                    		<div class="pure-u-3-4">
+		                                                    			<span>{{elemento.nombre}}</span>
+		                                                    		</div>
+		                                                    		<div class="pure-u-1-12">
+		                                                    			<a title="Ver eventos" href="/app/eventos/?elemento_id={{elemento.id}}">
+		                                                    				<img style="witdh: 100%; max-width: 30px;" src="{% static "core_app/icons/analytics-icon.png"%}"/>
+		                                                    			</a>
+		                                                    		</div>
+		                                                    		<div class="pure-u-1-24">
+		                                                    		</div>
+		                                                    		<div class="pure-u-1-12">
+		                                                    			<a title="Eliminar elemento" href="/app/elemento/delete/?elemento_id={{elemento.id}}">
+	                                                    					<img style="witdh: 100%; max-width: 30px;" src="{% static "core_app/icons/delete-icon.png"%}"/>
+	                                                    				</a>
+		                                                    		</div>
+		                                                    	</div>
+		                                                    </div>
+		                                                    <div>
+		                                                        <p>Descipción de lo que sucedió</p>
+		                                                        
+		                                                    </div>
+														</div>
+		                                            </div>
+		                                            <div class="pure-u-1-4 pure-u-sm-1-8"></div>
+		                                        </div>
+		                                    </div>
+		                                {% endfor %}
+	                                    
+	                                </div>
+	                                <div class="pure-u-1 pure-u-lg-1-4 pure-u-xl-1-6"></div>
+	                                <div class="pure-u-1 pure-u-lg-3-4 pure-u-xl-1-2">
+	                                
+	                                    {{ info.inmueble_actual.embebido | safe}}
+	                                    
+	                                </div>
+	                        	</div>
+	                    	</div>
+	                    {% else %}
+	                    	<div class="header">
+	                            <h2>"{{info.inmueble_actual}}" no tiene elementos asociados</h2>
+	                            <p><a id="ger-create-element" href="/app/create/?inmu_id={{info.inmueble_actual.id}}">Agregar elemento</a></p>
+	                            
+	                        </div>
+	                    {% endif %}	                    
+                	</div>
+            	</div>
+
+	        </div>
+	    </div>
+	</div>  
+
+<script type="text/javascript">
+	$("#ger-item-houses").addClass("ger-horizontal-menu-item-selected");
+</script>
+
+</div>
+{% endblock %}

@@ -1,0 +1,50 @@
+{% extends "template_base.html" %}
+
+{% block content_title %}
+
+        <div class="pure-g">
+            <div class="pure-u-1-1 pure-u-md-1-1 pure-u-xl-1-1" align="center">
+                {% if title %}<h1>{{ title }}</h1>{% endif %}
+            </div>
+        </div>
+
+
+{% endblock %}
+
+{% block content %}
+
+    <style>
+        .ger-container-login {
+            background: rgb(199, 199, 199);
+            border-radius: 1em;
+        }
+        .panel-heading{
+            padding: 1.5em 1.5em 0.5em 1.5em;
+            text-align: center;
+            background: rgb(144, 146, 149);
+            border-top-left-radius: 1em;
+            border-top-right-radius: 1em;
+        }
+        .panel-body{
+            padding: 1.5em;
+            color: black;
+            border-bottom-left-radius: 1em;
+            border-bottom-right-radius: 1em;
+        }
+        .ger-erro-login{
+            padding: 1em;
+        }
+        
+    </style>
+    
+    <div class="pure-g">
+            <div class="pure-u-1-4 pure-u-md-1-6 pure-u-xl-1-12">
+                
+            </div>
+            <div class="pure-u-1-1 pure-u-md-1-1 pure-u-xl-1-1" align="center">
+                <h1><a href="{{next_page}}">VOLVER</a></h1>
+            </div>
+        </div>
+    
+    
+{% endblock %}

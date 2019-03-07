@@ -1,0 +1,330 @@
+{% load staticfiles %}
+{% load admin_static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="A layout example with a side menu that hides on mobile, just like the Pure website.">
+
+    <title>Happy Home</title>
+    <link rel="stylesheet" href="http://yui.yahooapis.com/pure/0.6.0/pure-min.css">
+    
+    <!--[if lte IE 8]>
+    <link rel="stylesheet" href="http://yui.yahooapis.com/pure/0.6.0/grids-responsive-old-ie-min.css">
+    <![endif]-->
+    <!--[if gt IE 8]><!-->
+        <link rel="stylesheet" href="http://yui.yahooapis.com/pure/0.6.0/grids-responsive-min.css">
+    <!--<![endif]-->
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js" type="text/javascript"></script>
+    <link rel="stylesheet" href="http://code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css">
+    <script src="http://code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
+    <script type="text/javascript">
+        $(document).ready(function(){
+            $('.ger-house-menu > ul > li:has(ul)').addClass('desplegable');
+            var element_status_height = $('.ger-element-status').height();
+            var element_info_height = $('.ger-element-info').height();
+            if(element_status_height > element_info_height){
+                $('.ger-element-info').css('height', element_status_height);
+            }
+        });
+    </script>
+    <script>
+      $(function() {
+        var icons = {
+            header: "ui-icon-circle-arrow-e",
+            activeHeader: "ui-icon-circle-arrow-s"
+        };
+        $( ".accordion" ).accordion({header: ".accordion-header", collapsible: true, icons: icons, active: false});
+        $(".accordion div a").click(function() {
+          window.location = $(this).attr('href');
+          return false;
+       });
+      });
+    </script>
+    <style>
+    .pure-img-responsive {
+        max-width: 100%;
+        height: auto;
+    }
+
+    #menu,
+    .menu-link {
+        -webkit-transition: all 0.2s ease-out;
+        -moz-transition: all 0.2s ease-out;
+        -ms-transition: all 0.2s ease-out;
+        -o-transition: all 0.2s ease-out;
+        transition: all 0.2s ease-out;
+    }
+
+    #menu {
+        background: rgb(153, 153, 153);
+        border-top-left-radius: 2em;
+    }
+    #menu a {      
+        border: none;
+        padding: 1em 0;
+    }
+    #menu a:hover {
+        background: rgb(46, 49, 64);
+        padding: 1em 0;
+    }
+        body {
+            color: white;
+            background: rgb(51, 51, 51);
+        }
+        option, select {
+            color: black;
+        }
+        #layout{
+            margin-bottom: 2em;
+            padding-bottom: 2em;
+        }
+        #ger-master-container{
+            min-height: 700px;
+        }
+        .ger-house-menu a {
+            display: block;
+            color: #FFF;
+            text-decoration: none;
+            font-size: 16px;
+            line-height: 16px;
+        }
+        .ger-element-info {
+            color: #000;
+            padding: 0.5em;
+            margin: 0.2em 0.3em 0.3em 0.3em;
+            background: #ffffff;
+            background: -moz-linear-gradient(top, #ffffff 0%, #cccccc 100%);
+            background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#ffffff), color-stop(100%,#cccccc));
+            background: -webkit-linear-gradient(top, #ffffff 0%,#cccccc 100%);
+            background: -o-linear-gradient(top, #ffffff 0%,#cccccc 100%);
+            background: -ms-linear-gradient(top, #ffffff 0%,#cccccc 100%);
+            background: linear-gradient(to bottom, #ffffff 0%,#cccccc 100%);
+            filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ffffff', endColorstr='#cccccc',GradientType=0 );
+        }
+        .ger-element-info-label{
+            height: auto;
+            background: none;
+            border: none;
+
+        }
+        .ger-element-status{
+            margin: 0.1em 0 0.3em 0.3em;
+            padding: 0.5em;
+            height: 100%;
+            border-radius: 50% 0 0 50%;
+        }
+        .ger-element-status-0{
+            background: rgb(0, 153, 0);
+        }
+        .ger-element-status-1{
+            background: rgb(255, 204, 0);
+        }
+        .ger-element-status-2{
+            background: rgb(204, 0, 0);
+        }
+        .ger-element-icon{
+            width: 100%;
+        }
+        .ger-house-icon{
+            width: 100%;
+        }
+        .ger-house-content{
+            text-align: center;
+        }
+        .ger-house-selected{
+            background: rgb(76, 79, 94);
+        }
+        #ger-horizontal-menu{
+            background: rgb(121, 121, 121);
+            padding-left: 8%;
+        }
+        .ger-horizontal-menu-item{
+            background: rgb(153, 153, 153);
+            width: 4.5em;
+        }
+        .ger-horizontal-menu-item:hover{
+            background: rgb(0, 49, 64);
+        }
+        .ger-horizontal-menu-item img{
+            width: 100%;
+        }
+        .ger-horizontal-menu-item-selected{
+            background: rgb(76, 79, 94);
+        }
+        .ger-user-name{
+            margin: 0.1em;
+            padding: 0;
+        }
+        .ger-user-photo{
+            margin: 0.2em;
+            width: 60%;
+        }
+        #ger-principal-container{
+            padding: 1em;
+            margin: 1em;
+            background: rgb(121, 121, 121);
+        }
+        
+        #ger-principal-content{
+            margin: 1em;
+            border-radius: 2em;
+            background: rgb(76, 79, 94);
+        }
+        #ger-left-content{
+            padding: 0em 3em 0 3em;
+        }
+        @media (max-width: 480px) {
+            #ger-left-content{
+                padding: 0em 0.5em 0 0.5em;
+            }
+        }
+        .ger-credits{
+            padding: 1em;
+        }
+
+        #formAlarma{
+            text-align: center;
+        }
+        /* Apply padding to td elements that are direct children of the tr element. */
+        tr.spaceUnder > td
+        {
+            padding-bottom: 1em;
+        }
+                /* Apply padding to td elements that are direct children of the tr element. */
+        td.spaceleft
+        {
+            padding-left: 1em;
+        }
+
+        #select1 {width:150px; color:rgba(0, 0, 0, 0);}
+        #select1:focus, #select1:focus {
+            color:black;
+        }
+        .white {background:white;}
+        .red {background:red;}
+        .yellow {background:yellow;}
+        .green {background:green}
+        .ger-pending-counter {
+            background: red;
+            width: 15px;
+            height: 15px;
+            position: absolute;
+            top: 0;
+            right: 0;
+            padding: 5px;
+            border-radius: 17px;
+            text-align: center;
+        }
+        @media (max-width: 600px) {
+            #ger-header h1{
+                font-size: 1em;
+                margin-top: 1.5em;
+            }
+            .ger-horizontal-menu-item {
+                background: rgb(153, 153, 153);
+                width: 3.5em;
+            }
+        }
+    </style>
+</head>
+
+ 
+<body>
+    <!-- Content -->
+    <div class="container clase-general">
+        <div id="ger-header">
+        <div class="pure-g">
+            <div class="pure-u-1-4 pure-u-md-1-6 pure-u-xl-1-12">
+                <img width="100%" src="{% static "core_app/icons/mySmartLogo.png"%}" />
+            </div>
+            <div class="pure-u-1-4 pure-u-md-2-3 pure-u-xl-3-4" align="center">
+                <h1>My happy Smart Home</h1>
+            </div>
+            {% if user.is_authenticated %}
+                <div class="pure-u-1-4 pure-u-md-1-12 pure-u-xl-1-12" align="center">
+                    <img class="ger-user-photo" src="{% static "core_app/icons/user-icon.png"%}"/>
+                    <h5 class="ger-user-name">{{ user.get_username }}</h5>
+                </div>
+                
+                <div class="pure-u-1-4 pure-u-lg-1-12 pure-u-xl-1-24" align="center">    
+                    <div>
+                        <a class="ger-logout" href="/logout" style="float:right; display:inline-block;margin:20px">
+                            <img border="0" width="100%" alt="Crear nueva agenda"
+                                src="http://www.iconarchive.com/download/i77841/custom-icon-design/pretty-office-11/logout.ico">
+                        </a>
+                    </div>
+                </div>
+            {% endif %}
+        </div>
+        
+    </div>
+    {% if user.is_authenticated %}
+        <header>
+            <div id="ger-horizontal-menu">
+                <div class="pure-menu pure-menu-horizontal">
+                    <ul class="pure-menu-list">
+                        <li id="ger-item-houses" class="ger-horizontal-menu-item pure-menu-item">
+                            <a title="Mis inmuebles" href="/app"> 
+                                <img src="{% static "core_app/icons/apartment-icon.png"%}"/>
+                            </a>
+                        </li>
+                         <li id="ger-item-alarms" class="ger-horizontal-menu-item pure-menu-item">
+                            <a title="Alarmas" href="/app/alarmas">
+                                <img src="{% static "core_app/icons/alert-icon.png"%}"/>
+                            </a>
+                            {% if info.pendientes %}
+                                <div class="ger-pending-counter">
+                                    {{info.pendientes}}
+                                </div>
+                            {% endif %}
+                        </li>
+                        <li id="ger-item-alarm-history" class="ger-horizontal-menu-item pure-menu-item">
+                            <a title="Historial de alarmas" href="/app/history">
+                                <img src="{% static "core_app/icons/alarm-history.png"%}"/>
+                            </a>
+                        </li>
+                        <li id="ger-item-eventos" class="ger-horizontal-menu-item pure-menu-item">
+                            <a title="Eventos" href="/app/eventos">
+                                <img src="{% static "core_app/icons/analytics-icon.png"%}"/>
+                            </a>
+                        </li>
+                        <li class="ger-horizontal-menu-item pure-menu-item">
+                            <a title="Ajustes" href="#">
+                                <img src="{% static "core_app/icons/settings-icon.png"%}"/>
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </header>
+    {% endif %}
+    
+        <div id="ger-master-container">
+            {% block pretitle %}{% endblock %}
+            {% block content_title %}{% if title %}<h1>{{ title }}</h1>{% endif %}{% endblock %}
+            {% block content %}
+                {% block object-tools %}{% endblock %}
+                {{ content }}
+            {% endblock %}
+            {% block sidebar %}{% endblock %}
+        </div>
+    </div>
+    <!-- END Content -->
+    
+    {% block footer %}
+    <footer>
+        <script type="text/javascript" src="https://mysmarthome.atlassian.net/s/f34c4e9cef1569cdd47c2b808b74ffdd-T/en_US50u5ku/64014/8/1.4.24/_/download/batch/com.atlassian.jira.collector.plugin.jira-issue-collector-plugin:issuecollector/com.atlassian.jira.collector.plugin.jira-issue-collector-plugin:issuecollector.js?locale=en-US&collectorId=b6c5fff2">
+        </script>
+        <p class="ger-credits">Powered by 
+            <b>Hernán Tenjo</b>, 
+            <b>Jhony Toro</b>, 
+            <b>David Medina</b>, 
+            <b>Germán Rojas</b> & 
+            <b>Juvenal Barrios</b>
+        </p>
+    </footer>
+    {% endblock %}
+</body>
+</html>

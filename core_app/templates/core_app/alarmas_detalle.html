@@ -1,0 +1,100 @@
+{% extends "template_base.html" %}
+ 
+{% block content %}
+
+<div style="text-align: left;">
+<form action="" method="POST">{%csrf_token%}
+
+<input type="hidden" name="tipo_alarma" value={{ tipo_alarma }} >
+	<h2>Actualizacion de Alarmas</h2>
+	{% if tipo_alarma == 1 %}
+	<h3>Edicion Alarma de Humo</h3>
+	{% elif tipo_alarma == 2 %}
+	<h3>Edicion Alarma de Uso electrico</h3>
+	{% elif tipo_alarma == 3 %}
+	<h3>Edicion Alarma de Estado de inmueble</h3>
+	{% elif tipo_alarma == 4 %}
+	<h3>Edicion Alarma de Ingreso</h3>
+	{% else %}
+	<h3></h3>
+	{% endif %}
+
+
+	{{ alarma_formset.management_form }}
+	
+	 {% for form in alarma_formset.forms %}
+   		{% for field in form %}
+    	<div style="text-align: center;">
+        	{{ field.errors }}
+        	{% if field.label == 'Sensor' %}
+        		{% if error_sensor != '' %}
+        			<label>{{error_sensor}}</label>
+        		{% endif %}
+        	{% endif %}
+
+        	<table width="100%" border="0" >
+        	
+        		<tr class="spaceUnder">
+        		<td style="text-align: left;">
+        		<label>{{field.label}}: </label>
+        		</td>
+        		<td style="text-align: right;">
+        			{% if field.label == 'Sensor' %}
+
+	        			<select  name="sensor_select" title="sensor_select">
+	        				<option value={{ sensor.id }}>{{ sensor.nombre }}</option>
+						</select>
+			        {% else %}
+				        {% if field.label == 'Nivel' %}
+		        			<select name="nivel_select" onchange="colourFunction()"          title="nivel_select">
+								<option class="red" 
+								{% if nivel_alarma == 2 %}
+								selected
+								{% endif %}
+								value="2">Critica</option>
+								<option class="yellow" 
+								{% if nivel_alarma == 1 %}
+								selected
+								{% endif %}
+								value="1">Media</option>
+								<option class="green" 
+								{% if nivel_alarma == 0 %}
+								selected
+								{% endif %}
+								value="0">Basica</option>
+							</select>
+						{% else %}
+							{{ field }}
+						{% endif %}
+			        {% endif %}
+        		</td>
+        		
+        		<td class="spaceleft" style="text-align: left;" width="20%" >
+        		{% if field.help_text != '' %}
+        		<label>{{field.help_text}}</label>
+        		{% else %}
+        		{% endif %}
+        		</td>
+
+        		</tr>
+
+        	</table>
+
+	        {% for error in field.errors %}
+
+	        {% endfor %}
+
+	    </div>
+{% endfor %}
+{% endfor %}
+<div style="text-align: center; width=50%;" >
+	<input type="submit" name=""
+	style="height:80px;width:150px; "
+	 value="Actualizar" placeholder="">
+</div>
+
+</form>
+</div>
+
+
+{% endblock %}

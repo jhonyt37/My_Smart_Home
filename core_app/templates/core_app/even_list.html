@@ -1,0 +1,360 @@
+{% extends "template_base.html" %}
+{% load staticfiles %}
+{% load admin_static %}
+{% block content %}
+<style>
+	table.google-visualization-table-table {
+		margin:0px;padding:0px;
+		width:100%;
+		border:1px solid #000000;
+		
+		-moz-border-radius-bottomleft:0px;
+		-webkit-border-bottom-left-radius:0px;
+		border-bottom-left-radius:0px;
+		
+		-moz-border-radius-bottomright:0px;
+		-webkit-border-bottom-right-radius:0px;
+		border-bottom-right-radius:0px;
+		
+		-moz-border-radius-topright:0px;
+		-webkit-border-top-right-radius:0px;
+		border-top-right-radius:0px;
+		
+		-moz-border-radius-topleft:0px;
+		-webkit-border-top-left-radius:0px;
+		border-top-left-radius:0px;
+	}
+	table.google-visualization-table-table table{
+	    border-collapse: collapse;
+	    border-spacing: 0;
+		width:100%;
+		height:100%;
+		margin:0px;padding:0px;
+	}
+	table.google-visualization-table-table tr:last-child td:last-child {
+		-moz-border-radius-bottomright:0px;
+		-webkit-border-bottom-right-radius:0px;
+		border-bottom-right-radius:0px;
+	}
+	table.google-visualization-table-table table tr:first-child td:first-child {
+		-moz-border-radius-topleft:0px;
+		-webkit-border-top-left-radius:0px;
+		border-top-left-radius:0px;
+	}
+	table.google-visualization-table-table table tr:first-child td:last-child {
+		-moz-border-radius-topright:0px;
+		-webkit-border-top-right-radius:0px;
+		border-top-right-radius:0px;
+	}table.google-visualization-table-table tr:last-child td:first-child{
+		-moz-border-radius-bottomleft:0px;
+		-webkit-border-bottom-left-radius:0px;
+		border-bottom-left-radius:0px;
+	}
+	table.google-visualization-table-table tr:hover td{
+		background-color:#ffffff;
+	}
+	table.google-visualization-table-table td, table.google-visualization-table-table th{
+		vertical-align: middle;
+		background-color: #efebe8;
+		border: 1px solid #000000;
+		border-width: 0px 1px 1px 0px;
+		text-align: left;
+		padding: 12px;
+		font-size: 12px;
+		font-family: Arial;
+		font-weight: normal;
+		color: #000000;
+	}
+	table.google-visualization-table-table tr:last-child td{
+		border-width:0px 1px 0px 0px;
+	}
+	table.google-visualization-table-table tr td:last-child{
+		border-width:0px 0px 1px 0px;
+	}
+	table.google-visualization-table-table tr:last-child td:last-child{
+		border-width:0px 0px 0px 0px;
+	}
+	table.google-visualization-table-table tr:first-child th{
+			background:-o-linear-gradient(bottom, #3d3b39 5%, #969daa 100%);	background:-webkit-gradient( linear, left top, left bottom, color-stop(0.05, #3d3b39), color-stop(1, #969daa) );
+		background:-moz-linear-gradient( center top, #3d3b39 5%, #969daa 100% );
+		filter:progid:DXImageTransform.Microsoft.gradient(startColorstr="#3d3b39", endColorstr="#969daa");	background: -o-linear-gradient(top,#3d3b39,969daa);
+
+		background-color:#3d3b39;
+		border:0px solid #000000;
+		text-align:center;
+		border-width:0px 0px 1px 1px;
+		font-size:14px;
+		font-family:Arial;
+		font-weight:bold;
+		color:#ffffff;
+	}
+	table.google-visualization-table-table tr:first-child:hover td{
+		background:-o-linear-gradient(bottom, #3d3b39 5%, #969daa 100%);	background:-webkit-gradient( linear, left top, left bottom, color-stop(0.05, #3d3b39), color-stop(1, #969daa) );
+		background:-moz-linear-gradient( center top, #3d3b39 5%, #969daa 100% );
+		filter:progid:DXImageTransform.Microsoft.gradient(startColorstr="#3d3b39", endColorstr="#969daa");	background: -o-linear-gradient(top,#3d3b39,969daa);
+
+		background-color:#3d3b39;
+	}
+	table.google-visualization-table-table tr:first-child th:first-child{
+		border-width:0px 0px 1px 0px;
+	}
+	table.google-visualization-table-table tr:first-child th:last-child{
+		border-width:0px 0px 1px 1px;
+	}
+	#ger-dashboard-chart-div table{
+		color: black;
+	}
+	table.google-visualization-table-table{
+		height: 100%;
+	}
+	#ger-filter-date-div .charts-inline-block{
+		width: 100%;
+	}
+	#ger-filter-date-div .charts-inline-block .charts-inline-block .google-visualization-controls-slider-horizontal{
+		width: 85%;
+	}
+	text {
+		fill: white;
+	}
+
+	#ger-dashboard-chart-div{
+		width: 100%;
+	}
+	#ger-filter-date-div .charts-inline-block{
+		width: 100%;
+	}
+	#ger-filter-date-div .charts-inline-block .charts-inline-block .google-visualization-controls-slider-horizontal{
+		width: 85%;
+	}
+	text {
+		fill: white;
+	}
+	#ger-filter-element-div, #ger-filter-alarm-type-div{
+  		width: 100%;
+  		
+  		padding: 1em;
+  	}
+  	
+  	#ger-timechart, #ger-filter-date-div, #ger-chart-table{
+  		width: 100%;
+  		height: 100%;
+  	}
+	@media (max-width: 600px) {
+		#ger-principal-container {
+			padding: 0em;
+			margin: 0em;
+		}
+		#ger-left-content {
+			padding: 0em 0.5em 0 0.5em;
+		}
+		#ger-dashboard-chart-container{
+			overflow: hidden;
+		}
+		table.google-visualization-table-table td, table.google-visualization-table-table th{
+			padding: 5px;
+		}
+		#ger-filter-date-div .charts-inline-block{
+			width: 100%;
+		}
+		#ger-filter-date-div .charts-inline-block .charts-inline-block .google-visualization-controls-slider-horizontal{
+			width: 70%;
+		}
+		#ger-filter-date-div{
+	  		padding: 1em;
+	  	}
+		.google-visualization-controls-rangefilter-thumblabel {
+			font-size: 10px;
+		}
+	}
+	
+</style>
+<div id="ger-principal-container">
+    <div id="ger-principal-content">
+        <div id="layout">
+        	<div class="pure-g">
+                <div class="pure-u-1 pure-u-sm-1-4 pure-u-lg-1-8 pure-u-xl-1-12">
+                    <div id="menu">
+                    	{% if info.inmuebles %}
+
+	                        <div class="ger-house-menu">
+	                        	<div class="pure-g">
+	                        		{% for inmueble in info.inmuebles %}
+		                                <div class="pure-u-1-3 pure-u-sm-1">
+		                                	{% if inmueble.id|add:0 == info.inmueble_actual.id|add:0 %}
+		                                		<a class="ger-house ger-house-selected" href="?inmueble_id={{inmueble.id}}">
+		                                	{% else %}
+		                                		<a class="ger-house" href="?inmueble_id={{inmueble.id}}">
+		                                	{% endif %}
+		                                        <div class="pure-g">
+		                                            <div class="pure-u-1">
+		                                                <div class="ger-house-content">
+
+		                                                	{% with estado=inmueble.estado|stringformat:"s" %}
+															<img class="ger-house-icon" src="{% static "core_app/icons/home-icon-"|add:estado|add:".png" %}"/>
+			                                                {% endwith %}
+		                                                    <h4>{{inmueble.nombre}}</h4>
+		                                                </div>
+		                                            </div>
+		                                        </div>
+		                                    </a>
+		                                </div>
+		                            {% endfor %}
+	                            </div>
+	                        </div>
+	                    {% endif %}
+                    </div>
+                </div>
+                <div class="pure-u-1 pure-u-sm-3-4 pure-u-lg-7-8 pure-u-xl-11-12">
+                    <div id="ger-left-content">
+                    	{% if info.elemento_actual %}
+			    			<h3>Eventos de "{{info.elemento_actual.nombre}}" de "{{info.inmueble_actual.nombre}}"</h3>
+			    			
+			    		{% else %}
+			    			{% if info.inmueble_actual %}
+			    				<h3>Eventos de "{{info.inmueble_actual.nombre}}"</h3>
+			    			{% else %}
+			    				<h3>Todos los eventos</h3>
+			    			{% endif %}
+			    		{% endif %}
+                    	{% if info.eventos %}
+
+							<div>
+								<div id="ger-dashboard-chart-container">
+		                    		<div id="ger-dashboard-chart-div">
+								      	
+								    	<div id="ger-filter-element-div"></div>
+								    	<div id="ger-timechart"></div>
+								    	<div id="ger-filter-date-div"></div>
+								    	<div id="ger-chart-table"></div>
+								    	
+								    </div>
+								</div>
+				        	</div>
+                        {% else %}
+                        	{% if info.elemento_actual %}
+				    			<p>No han habido eventos en el elemento: "{{info.elemento_actual.nombre}}"" del inmueble: "{{info.inmueble_actual.nombre}}"</p>
+				    		{% else %}
+				    			{% if info.inmueble_actual %}
+				    				<p>No han habido eventos en el inmueble: "{{info.inmueble_actual.nombre}}"</p>
+				    			{% else %}
+				    				<p>No han habido eventos en tus inmuebles</p>
+				    			{% endif %}
+				    		{% endif %}
+						{% endif %}
+						
+                	</div>
+            	</div>
+
+	        </div>
+	    </div>
+	</div>  
+
+<script type="text/javascript" src="https://www.google.com/jsapi?autoload={'modules':[{'name':'visualization','version':'1','packages':['timeline']}]}"></script>
+<script type="text/javascript">
+google.load('visualization', '1.0', {'packages':['controls', 'timeline']});
+google.setOnLoadCallback(drawDashboard);
+function drawDashboard() {
+
+    var container = document.getElementById('ger-timechart');
+	var chart = new google.visualization.Timeline(container);
+
+	var data = new google.visualization.DataTable();
+	data.addColumn('string', 'Elemento');
+	data.addColumn('string', 'Estado');
+	data.addColumn('string', 'Tipo de sensor');
+	data.addColumn('string', 'Inmueble');
+	data.addColumn('date', 'Fecha y hora');
+	data.addColumn('date', 'End');
+	
+	data.addRows(
+		
+		[{% for evento in info.eventos reversed %}
+
+			
+			{% ifchanged evento.sensor__activo__nombre%}
+				{% if not forloop.first %}
+					, new Date('{{info.maxdatetime|date:"r"}}')],
+				{% endif %}
+			{% else %}
+				{% if not forloop.first %}
+					, new Date('{{evento.fecha_hora_evento|date:"r"}}')], 
+				{% endif %}
+			{% endifchanged %}
+			
+			[ "{{evento.sensor__activo__nombre}}"
+			{% if evento.sensor__tipo_sensor__nombre == "acceso" %}
+				{% if evento.codigo == "0" %},"Close"
+				{% else %},"Open"{% endif %}
+			{% else %}
+				{% if evento.codigo == "0" %},"Off"
+				{% else %},"On"{% endif %}
+			{% endif %}
+			, "{{evento.sensor__tipo_sensor__nombre}}", "{{evento.sensor__activo__inmueble__nombre}}"
+				, new Date('{{evento.fecha_hora_evento|date:"r"}}')
+			{% if forloop.last %}
+				, new Date('{{info.maxdatetime|date:"r"}}')]
+			{% endif %}
+		{% endfor %}
+
+		]
+
+	);
+ 	var dashboard = new google.visualization.Dashboard(
+        document.getElementById('ger-dashboard-chart-div'));
+	
+
+	// Create a range slider, passing some options
+        var dateRangeSlider = new google.visualization.ControlWrapper({
+          'controlType': 'DateRangeFilter',
+          'containerId': 'ger-filter-date-div',
+          'options': {
+            'filterColumnIndex': 4,
+          }
+        });
+        var elementFilter = new google.visualization.ControlWrapper({
+          	'controlType': 'CategoryFilter',
+          	'containerId': 'ger-filter-element-div',
+          	'options': {
+            	'filterColumnIndex': 0,
+          }
+        });
+
+        var timeLine = new google.visualization.ChartWrapper({
+          	'chartType': 'Timeline',
+          	'containerId': 'ger-timechart',
+          	'view': {
+		        columns: [0, 1, 4, 5]
+		  	},
+		  	'options': {
+				'avoidOverlappingGridLines': false,
+				'backgroundColor': '#999'
+		  	}
+        });
+
+        var tableChart = new google.visualization.ChartWrapper({
+          'chartType': 'Table',
+          'containerId': 'ger-chart-table',
+          'view': {
+		        columns: [0, 1, 2, 3, 4]
+		  }
+        });
+        var datepatern = new google.visualization.DateFormat({pattern: "dd MMMM yyyy,  h:m aa"});
+        datepatern.format(data, 4);
+        datepatern.format(data, 5);
+        dashboard.bind([dateRangeSlider, elementFilter], [timeLine, tableChart]);
+
+        // Draw the dashboard.
+        dashboard.draw(data);
+        /*var options = {
+    timeline: { rowLabelStyle: {fontName: 'Helvetica', fontSize: 18, color: '#333' },
+                barLabelStyle: { fontName: 'Garamond', fontSize: 14 } }
+  	};*/
+}
+</script>
+
+</div>
+<script type="text/javascript">
+	$("#ger-item-eventos").addClass("ger-horizontal-menu-item-selected");
+</script>
+
+{% endblock %}

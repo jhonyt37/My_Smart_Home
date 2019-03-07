@@ -1,0 +1,231 @@
+{% extends "template_base.html" %}
+{% load staticfiles %}
+{% load admin_static %}
+{% block content %}
+
+<script src="//code.jquery.com/jquery-1.10.2.js"></script>
+<script src="//code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
+<style>
+  
+  .alarm-type-container {
+    padding: 0.5em;
+    margin: 0.3em;
+    background: #E5E5E5;
+    border-radius: 10px;
+    text-align: center;
+  }
+  .alarm-type-container h5 {
+    padding: 0;
+    margin: 2px 0px;
+  }
+  .ui-dialog-titlebar.ui-widget-header.ui-corner-all.ui-helper-clearfix.ui-draggable-handle {
+    background: rgb(121, 121, 121);
+  }
+  .ui-dialog-titlebar.ui-widget-header.ui-corner-all.ui-helper-clearfix.ui-draggable-handle {
+    color: white;
+  }
+  #ger-create-alarm{
+    color: #555555;
+    padding: 0.5em;
+    margin: 0.5em;
+  }
+  .ger-element-status-container{
+    margin-top: 10px;
+  }
+  
+  @media (max-width: 600px) {
+    .ger-element-status{
+      margin: 0;
+      padding: 0;
+    }
+    .ger-element-info{
+      padding: 0;
+      margin: 0.1em;
+    }
+    .ger-element-status-container{
+      margin-top: 20%;
+    }
+  }
+</style>
+<div id="ger-principal-container">
+    <div id="ger-principal-content">
+        <div id="layout">
+            <div class="pure-g">
+                <div class="pure-u-1 pure-u-sm-1-4 pure-u-lg-1-8 pure-u-xl-1-12">
+                    <div id="menu">
+                      {% if info.inmuebles %}
+
+                          <div class="ger-house-menu">
+                            <div class="pure-g">
+                              {% for inmueble in info.inmuebles %}
+                                    <div class="pure-u-1-3 pure-u-sm-1">
+                                      {% if inmueble.id|add:0 == info.inmueble_actual.id|add:0 %}
+                                        <a class="ger-house ger-house-selected" href="?inmueble_id={{inmueble.id}}">
+                                      {% else %}
+                                        <a class="ger-house" href="?inmueble_id={{inmueble.id}}">
+                                      {% endif %}
+                                            <div class="pure-g">
+                                                <div class="pure-u-1">
+                                                    <div class="ger-house-content">
+
+                                                      {% with estado=inmueble.estado|stringformat:"s" %}
+                              <img class="ger-house-icon" src="{% static "core_app/icons/home-icon-"|add:estado|add:".png" %}"/>
+                                                      {% endwith %}
+                                                        <h4>{{inmueble.nombre}}</h4>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </a>
+                                    </div>
+                                {% endfor %}
+                              </div>
+                          </div>
+                      {% endif %}
+                    </div>
+                </div>
+                <div class="pure-u-1 pure-u-sm-3-4 pure-u-lg-7-8 pure-u-xl-11-12">
+                    <div id="ger-left-content">
+                        {% if info.alarmas %}
+                          <div class="header">
+                              <h1>{{ info.inmueble_actual.nombre }}</h1>
+                          </div>
+
+                          <h3>Alarmas del sistema</h3>
+                          <button id="ger-create-alarm">Crear alarma</button>
+                          
+                          <div>
+                              <div class="pure-g">
+                                  <div class="pure-u-1 pure-u-lg-1-2 pure-u-xl-1-3">
+                                    {% for alarma in info.alarmas %}
+                                      <div class="ger-element-container">
+                                          <div class="pure-g ger-element-content">
+                                              <div class="pure-u-1-12 pure-u-sm-1-8">
+                                                  <div class="ger-element-status-container">
+                                                      <div class="ger-element-status ger-element-status-{{alarma.nivel_alarma}}">
+                                                        {% if alarma.nivel_alarma == 2 %}
+                                                              <img class="ger-element-icon" src="{% static "core_app/icons/fire-icon.png"%}"/>
+                                                            {% else %}{% if alarma.nivel_alarma == 1 %}
+                                                              <img class="ger-element-icon" src="{% static "core_app/icons/move-icon.png"%}"/>
+                                                            {% else %}{% if alarma.nivel_alarma == 0 %}
+                                                              <img class="ger-element-icon" src="{% static "core_app/icons/light-icon.png"%}"/>
+                                                            {% endif %}
+
+                                                            {% endif %}
+                                                          {% endif %}
+                                                      </div>
+                                                  </div>
+                                              </div>
+                                              <div class="pure-u-11-12 pure-u-sm-7-8">
+                                                  <div class="accordion ger-element-info">
+                                                      <div class="ger-element-info-label accordion-header">
+                                                        <div class="pure-g">
+                                                          <div class="pure-u-7-8">
+                                                            <span>{{alarma.nombre}}</span>
+                                                          </div>
+                                                          <!--<div class="pure-u-1-8">
+                                                            <a href="/app/alarmas/editar_alarmas/?alarma_id={{alarma.id}}">
+                                                              <!--<img style="witdh: 100%; max-width: 30px;" src="{% static "core_app/icons/analytics-icon.png"%}"/>-
+                                                              Editar
+                                                            </a>
+                                                          </div>-->
+                                                        </div>
+                                                      </div>
+                                                      <div>
+                                                          <p>{{alarma.descripcion}}</p>
+                                                          
+                                                      </div>
+                                                  </div>
+                                              </div>
+                                          </div>
+                                      </div>
+                                  {% endfor %}
+                                  </div>
+                                  <div class="pure-u-1 pure-u-lg-1-2 pure-u-xl-1-3">
+                                      
+                                  </div>
+                                  <div class="pure-u-1 pure-u-lg-1-2 pure-u-xl-1-3">
+                                      
+                                </div>
+                            </div>
+                        </div>
+                      {% else %}
+                        <div class="header">
+                              <h2>"{{info.inmueble_actual}}" no tiene alarmas asociadas</h2>
+                              <button id="ger-create-alarm">Crear alarma</button>
+                          </div>
+                      {% endif %}
+                  </div>
+              </div>
+            </div>
+      </div>
+  </div>
+</div>
+<div id="ger-modal-alarmas" title="Selecciona tipo de alarma">
+  <div class="pure-g">
+    <div class="pure-u-1-2">
+      <div class="alarm-type-container">
+        <a href="/app/alarmas/crear_alarmas/?tipo_alarma=1&inmu_id={{info.inmueble_actual.id}}">
+          <h5>Humo</h5>
+          <div class="ger-img-container">
+            <img width="100%" src="{% static "core_app/icons/alarm-humo.png" %}"/>
+          </div>
+        </a>
+      </div>
+    </div>
+    
+    <div class="pure-u-1-2">
+      <div class="alarm-type-container">
+        <a href="/app/alarmas/crear_alarmas/?tipo_alarma=2&inmu_id={{info.inmueble_actual.id}}">
+          <h5>Uso el&eacute;ctrico</h5>
+          <div width="70%" class="ger-img-container">
+            <img width="100%" src="{% static "core_app/icons/alarm-electric.png" %}"/>
+          </div>
+        </a>
+      </div>
+    </div>
+    <div class="pure-u-1-2">
+      <div class="alarm-type-container">
+        <a href="/app/alarmas/crear_alarmas/?tipo_alarma=3&inmu_id={{info.inmueble_actual.id}}">
+          <h5>Ingreso de personas</h5>
+          <div width="70%" class="ger-img-container">
+            <img width="100%" src="{% static "core_app/icons/alarm-persons-access.png" %}"/>
+          </div>
+        </a>
+      </div>
+    </div>
+    <div class="pure-u-1-2">
+      <div class="alarm-type-container">
+        <a href="/app/alarmas/crear_alarmas/?tipo_alarma=4&inmu_id={{info.inmueble_actual.id}}">
+          <h5>Disponibilidad de acceso</h5>
+          <div width="70%" class="ger-img-container">
+            <img width="100%" src="{% static "core_app/icons/alarm-access-disp.png" %}"/>
+          </div>
+        </a>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script type="text/javascript">
+  $(function() {
+      $("#ger-modal-alarmas").dialog({
+          autoOpen: false,
+          
+          show: {
+            effect: "explode",
+            duration: 700
+          },
+        hide: {
+            effect: "explode",
+            duration: 700
+        }
+      });
+      $( "#ger-create-alarm" ).click(function() {
+        $( "#ger-modal-alarmas" ).dialog("open");
+      });
+  });
+</script>
+<script type="text/javascript">
+  $("#ger-item-alarms").addClass("ger-horizontal-menu-item-selected");
+</script>
+{% endblock %}
