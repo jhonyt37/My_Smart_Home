@@ -41,8 +41,10 @@ class CorreoView(ListView):
 
                 c = correo.MyCorreo()
                 c.enviar_gmail(tipo_alarma=self.request.GET['alerta_id'],
-                          destinatario=user.email,activo=primer_elemento.nombre,
-                          user=user)
+                          destinatario=user.email,
+                          activo=primer_elemento.nombre,
+                          user=user,
+                          nombre_alarma="alarma")
 
                 connection=psycopg2.connect("host=" + DB_HOST + " dbname=" + DB_NAME + " user=" + DB_USER + " password=" + DB_PWD )
                 cursor=connection.cursor()
@@ -124,7 +126,7 @@ class EventosView(ListView):
             if ('elemento_id' in self.request.GET) and self.request.GET['elemento_id'] != "":
                 elm_id = self.request.GET['elemento_id']
                 resultado['elemento_actual'] = Elemento.objects.get(pk=elm_id)
-                resultado['inmueble_actual'] = resultado['elemento_actual'].inmueble
+                resultado['inmueble_actual'] = resultado['elemento_actual'].inmu
                 resultado['elementos'] = Elemento.objects.all().filter(inmu_id = resultado['inmueble_actual'].id, user_id = user.id).order_by('-estado')
                 eventos = i.consul_events_elem(elem_id = elm_id, fech_1 = fecha1, fech_2 = fecha2)
             else:

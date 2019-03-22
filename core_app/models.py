@@ -65,13 +65,13 @@ class Elemento(Activo):
             return True
         elif estado == 1:
             self.estado = estado
-            if self.inmueble.estado == 0:
-                self.inmueble.set_estado(estado)
+            if self.inmu.estado == 0:
+                self.inmu.set_estado(estado)
             return True
         elif estado == 2:
             self.estado = estado
-            if self.inmueble.estado < 2:
-                self.inmueble.set_estado(estado)
+            if self.inmu.estado < 2:
+                self.inmu.set_estado(estado)
             return True
         else:
             return False

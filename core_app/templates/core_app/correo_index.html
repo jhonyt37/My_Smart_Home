@@ -1,6 +1,53 @@
+
 {% extends "template_base.html" %}
 
 {% block content %}
+
+<style>
+
+.button_orange {
+  width: 250px;
+  background-color: #FB5C06;
+  border: none;
+  color: white;
+  padding: 15px 32px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+  margin: 4px 2px;
+  cursor: pointer;
+}
+
+.button_red {
+  width: 250px;
+  background-color: #FF0000;
+  border: none;
+  color: white;
+  padding: 15px 32px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+  margin: 4px 2px;
+  cursor: pointer;
+}
+
+.button_green {
+  width: 250px;
+  background-color: #4CAF50;
+  border: none;
+  color: white;
+  padding: 15px 32px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+  margin: 4px 2px;
+  cursor: pointer;
+}
+</style>
+
 
 <div class="container">
   <div class="jumbotron">
@@ -10,27 +57,27 @@
   	</tr>
   	<tr>
   		<td>
-  			<form action="{%url 'app:correo_envio'%}" method="get">
+  			<form action="{%url 'core_app:correo_envio'%}" method="get">
 		    	<input type="hidden" name="alerta_id" value="2"/>
-				<button class="red" type="submit">Critico</button>
+				<button class="button_red" type="submit">Critico</button>
 		    </form>
         </td>
         <td>
         </td>
         <td>
 
-        	<form action="{%url 'app:correo_envio'%}" method="get">
+        	<form action="{%url 'core_app:correo_envio'%}" method="get">
 		    	<input type="hidden" name="alerta_id" value="1"/>
-		    	<button class="orange" type="submit">Seguridad</button>
+		    	<button class="button_orange" type="submit">Seguridad</button>
 		    </form>
         </td>
         <td>
         </td>
         <td>
 
-        	<form action="{%url 'app:correo_envio'%}" method="get">
+        	<form action="{%url 'core_app:correo_envio'%}" method="get">
 		    	<input type="hidden" name="alerta_id" value="0"/>
-		    	<button class="green" type="submit">Notificacion</button>
+		    	<button class="button_green" type="submit">Notificacion</button>
 		    </form>
         </td>
     </tr>

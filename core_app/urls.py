@@ -8,6 +8,7 @@ urlpatterns = [
     # ex: /app/
     re_path(r'^$', login_required(views.HomeListView.as_view()), name='home_list'),
     # ex: /grupo/
+    #re_path(r'^correo/$', login_required(views.HomeListView.as_view(template_name='core_app/correo_index.html')), name='correo_index'),
     re_path(r'^correo/$', login_required(views.HomeListView.as_view(template_name='core_app/correo_index.html')), name='correo_index'),
 
     re_path(r'^api/$', views.SimuladorView.as_view(template_name='core_app/api_index.html'), name='api_index'),

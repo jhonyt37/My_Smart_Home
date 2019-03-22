@@ -31,23 +31,29 @@ class MyCorreo:
         
         mail_server.login(self.mensaje['From'],"zvjktuetqawucpqk")
 
-        mi_mensaje = MIMEText("Correo electronico generado por el activo " + activo +
-        ". Verificacion de envio exitosa. Por favor No contestar")
-        mi_mensaje['From']=self.mensaje['From']
-        mi_mensaje['To']=destinatario
+        
 
         print("enviado a : "+ mi_mensaje['To'])
 
         if tipo_alarma == "2" or tipo_alarma == 2:
-            mi_mensaje['Subject']="Alerta critica registrada"
             tipo_sms = "Critica"
         elif tipo_alarma == "1" or tipo_alarma == 1:
-            mi_mensaje['Subject']="Alerta de Seguridad registrada"
             tipo_sms = "Seguridad"
         elif tipo_alarma == "0" or tipo_alarma == 0:
-            mi_mensaje['Subject']="Notificacion de evento registrado"
             tipo_sms = "Evento"
         
+        mi_mensaje = MIMEText("Correo electronico generado por el activo " + activo +
+        ". Verificacion de envio exitosa. Alarma activada tipo "+tipo_sms)
+
+        if tipo_alarma == "2" or tipo_alarma == 2:
+            mi_mensaje['Subject']="Alerta critica registrada"
+        elif tipo_alarma == "1" or tipo_alarma == 1:
+            mi_mensaje['Subject']="Alerta de Seguridad registrada"
+        elif tipo_alarma == "0" or tipo_alarma == 0:
+            mi_mensaje['Subject']="Notificacion de evento registrado"
+
+        mi_mensaje['From']=self.mensaje['From']
+        mi_mensaje['To']=destinatario
         #print (mail_server.ehlo())
 
         # Envio del mensaje

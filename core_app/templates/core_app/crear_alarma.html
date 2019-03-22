@@ -37,9 +37,51 @@ function colourFunction() {
     .panel-body{
         padding: 1.5em;
         color: black;
-        border-bottom-left-radius: 1em;
-        border-bottom-right-radius: 1em;
-    }
+	        border-bottom-left-radius: 1em;
+	        border-bottom-right-radius: 1em;
+	    }
+
+	    /* Clock Icon */
+
+	a.clock {
+	    border-radius: 100%;
+	    height: 26px;
+	    width: 26px;
+	}
+	a.clock:after,
+	a.clock:before {
+	    border-left: none;
+	    width: 0;
+	}
+	a.clock:after {
+	    height: 9px;
+	    left: 12px;
+	    top: 3px;
+	}
+	a.clock:before {
+	    height: 4px;
+	    left: 15px;
+	    top: 8px;
+	    -webkit-transform: rotate(45deg);
+	       -moz-transform: rotate(45deg);
+	        -ms-transform: rotate(45deg);
+	         -o-transform: rotate(45deg);
+	            transform: rotate(45deg);
+	}
+
+	.datetimeshortcuts .clock-icon {
+    background: url(../img/icon-clock.svg) 0 0 no-repeat;
+
+	}
+	.datetimeshortcuts .clock-icon, .datetimeshortcuts .date-icon {
+    position: relative;
+    display: inline-block;
+    vertical-align: middle;
+    height: 16px;
+    width: 16px;
+    overflow: hidden;
+	}
+
 </style>
 
 {{ form.non_field_errors }}
@@ -102,6 +144,19 @@ function colourFunction() {
 														<option class="yellow" value="1">Media</option>
 														<option class="green" value="0">B&aacute;sica</option>
 													</select>
+												{% elif field.label == 'Hora inicio'%}
+												{{ field }}
+												<span class="datetimeshortcuts">&nbsp;
+													<a href="#">Now</a>&nbsp;|&nbsp;
+													<i class="fas fa-clock"></i>
+													<a class="clock-icon" title="Clock" href="#"></a>
+													<a href="#" id="clocklink0">
+
+													<span class="clock-icon" title="Choose a Time"></span>
+													</a>
+												</span>
+													
+
 												{% else %}
 													{{ field }}
 												{% endif %}

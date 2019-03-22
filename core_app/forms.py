@@ -30,10 +30,12 @@ class AlarmaEstado2Form(forms.ModelForm):
 	sensor = forms.ChoiceField(required=False)
 	estado = forms.BooleanField(required=False, help_text='apagado=[] Encendido=[X]')
 	nivel = forms.ChoiceField(required=False)
-	
+	hora_inicio = forms.TimeField(widget=forms.TimeInput(format='%H:%M'))
+	hora_fin = forms.TimeField(widget=forms.TimeInput)
+
 	class Meta:
 		model = AlarmaEstado
-		exclude = ('eliminada', 'estado_sensor','nivel_alarma','sensor')
+		exclude = ('eliminada', 'estado_sensor','nivel_alarma','sensor', 'hora_inicio','hora_fin')
 
 class AlarmaAccesoForm(forms.ModelForm):
 	sensor = forms.ChoiceField(required=False)
